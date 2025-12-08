@@ -1,0 +1,164 @@
+/* Styles spécifiques à la page Panier - Dragon d'Or */
+
+.cart-title {
+    color: #141616;
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2.2em;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    background-color: #f0fff0;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.empty-cart {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    margin: 40px 0;
+}
+
+.empty-cart a {
+    color: #FF2D20;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.empty-cart a:hover {
+    text-decoration: underline;
+}
+
+.cart-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px auto 30px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cart-table thead {
+    background-color: #f2f2f2;
+}
+
+.cart-table th {
+    padding: 15px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.cart-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.cart-item .item-name {
+    font-weight: 500;
+    color: #222;
+}
+
+.cart-item .item-price,
+.cart-item .item-quantity {
+    color: #555;
+}
+
+.cart-item .item-subtotal {
+    font-weight: bold;
+    color: #FF2D20;
+}
+
+.cart-item .item-action .remove-link {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.cart-item .item-action .remove-link:hover {
+    background-color: #ffe6e6;
+    text-decoration: underline;
+}
+
+.cart-total {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.8em;
+    color: #333;
+    padding: 20px;
+}
+
+.checkout-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.checkout-button {
+    font-weight: bold;
+    color: green;
+    border: 1px solid green;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    background-color: #f8fff8;
+}
+
+.checkout-button:hover {
+    background-color: green;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cart-table {
+        width: 95%;
+        font-size: 0.9em;
+    }
+
+    .cart-table th,
+    .cart-table td {
+        padding: 10px 5px;
+    }
+
+    .cart-title {
+        font-size: 1.8em;
+    }
+
+    .cart-total {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .checkout-button {
+        display: block;
+        margin: 0 10px;
+        padding: 15px;
+    }
+}

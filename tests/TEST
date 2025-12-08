@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dragon d'or - Menu Click & Collect</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    <div class="container-layout">
+        <header class="main-header">
+            <div class="logo-container">
+                <h1 class="app-title">
+                    <a href="{{ route('menu.index') }}" class="app-title-link">Dragon d'Or 🍜</a>
+                </h1>
+            </div>
+
+            <nav class="main-nav-container">
+                <a href="{{ route('accueil.index') }}" class="nav-link">Accueil</a>
+                <a href="{{ route('menu.index') }}" class="nav-link">Menu</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="{{ route('cart.show') }}" class="cart-link nav-link">
+                    Panier ({{ $itemCount ?? 0 }}) 🛒
+                </a>
+            </nav>
+        </header>
+
+        <div class="order-button-container">
+            <a href="{{ route('order.create') }}" class="main-order-button">
+                Passer ma Commande Click & Collect 🥢
+            </a>
+        </div>
+
+        <main>
+            <h2 class="menu-title">
+                Notre Menu du Jour
+            </h2>
+
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="{{ asset('images/1.jpg') }}" alt="Poulet Sweet and Sour">
+                    <h3 class="plat-title">Poulet Sweet and Sour</h3>
+                    <p class="plat-description">Poulet croustillant sauce aigre-douce.</p>
+                    <p class="plat-price">12,50 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="1">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="{{ asset('images/2.jpg') }}" alt="Nouilles Sautées aux Légumes">
+                    <h3 class="plat-title">Nouilles Sautées aux Légumes</h3>
+                    <p class="plat-description">Nouilles fraîches avec légumes croquants.</p>
+                    <p class="plat-price">10,00 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="2">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="{{ asset('images/3.jpg') }}" alt="Rouleaux de Printemps">
+                    <h3 class="plat-title">Rouleaux de Printemps</h3>
+                    <p class="plat-description">2 pièces fraîches avec menthe.</p>
+                    <p class="plat-price">6,50 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="3">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="{{ asset('images/4.jpg') }}" alt="Bœuf Satay">
+                    <h3 class="plat-title">Bœuf Satay</h3>
+                    <p class="plat-description">Bœuf grillé sauce cacahuète.</p>
+                    <p class="plat-price">14,00 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="4">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="{{ asset('images/5.jpg') }}" alt="Riz Cantonais">
+                    <h3 class="plat-title">Riz Cantonais</h3>
+                    <p class="plat-description">Riz frit avec œuf et légumes.</p>
+                    <p class="plat-price">9,00 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="5">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="{{ asset('images/6.jpg') }}" alt="Noix de Coco">
+                    <h3 class="plat-title">Noix de Coco</h3>
+                    <p class="plat-description">Noix de coco de Thaïlande.</p>
+                    <p class="plat-price">3,00 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="9">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                    <div class="menu-card">
+                    <img src="{{ asset('images/16.jpg') }}" alt="Thé Glacé maison">
+                    <h3 class="plat-title">Thé Glacé maison</h3>
+                    <p class="plat-description">Thé froid infusé au jasmin.</p>
+                    <p class="plat-price">3,50 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="5">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <img src="{{ asset('images/17.jpg') }}" alt="Beignets>
+                    <h3 class="plat-title"><</h3>
+                    <p class="plat-description">Beignets chauds à la cannelle</p>
+                    <p class="plat-price">4,50 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="17">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+                    <div class="menu-card">
+                    <img src="{{ asset('images/18.jpg') }}" alt="Coca-Cola (33cl)">
+                    <h3 class="plat-title">Coca-Cola (33cl)</h3>
+                    <p class="plat-description">Coca-Cola (33cl) frais.</p>
+                    <p class="plat-price">2,50 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="18">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
+                    <div class="menu-card">
+                    <img src="{{ asset('images/19.jpg') }}" alt="Eau Minérale">
+                    <h3 class="plat-title">Coca-Cola (33cl)</h3>
+                    <p class="plat-description">Bouteille d'eau de source (50cl).</p>
+                    <p class="plat-price">2 €</p>
+                    <div class="add-to-cart-container">
+                        <form method="POST" action="{{ route('cart.add') }}" class="cart-form">
+                            @csrf
+                            <input type="hidden" name="plat_id" value="19">
+                            <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                            <button type="submit" class="add-button-link">Ajouter</button>
+                        </form>
+
+
+        </main>
+
+        <footer class="main-footer">
+            Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+        </footer>
+    </div>
+</body>
+</html>
+</html>
+
+
+

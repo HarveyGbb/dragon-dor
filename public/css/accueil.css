@@ -1,0 +1,130 @@
+/* Styles spécifiques à la page d'accueil */
+
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-container {
+    margin-top: 150px;
+    padding: 40px 20px;
+    max-width: 800px;
+}
+
+.welcome-title {
+    color: #FF2D20;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.welcome-subtitle {
+    font-size: 1.2em;
+    margin-top: 20px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome-button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin-top: 40px;
+    background-color: #008000;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.welcome-button:hover {
+    background-color: #006600;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 128, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .welcome-container {
+        margin-top: 100px;
+        padding: 20px;
+    }
+
+    .welcome-title {
+        font-size: 2.2em;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-title {
+        font-size: 1.8em;
+    }
+
+    .welcome-button {
+        padding: 12px 24px;
+        font-size: 0.9em;
+        width: 100%;
+        max-width: 300px;
+    }
+/* --- MESSAGE DE SUCCÈS (Page Accueil) --- */
+
+.success-alert {
+    background-color: #d4edda; /* Fond vert clair */
+    color: #155724;            /* Texte vert foncé */
+    border: 1px solid #c3e6cb; /* Bordure verte */
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Légère ombre */
+}
+
+.success-alert h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.success-alert p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+/* --- BOUTON D'APPEL À L'ACTION (Voir le Menu) --- */
+
+.hero-section {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: #FF2D20; /* Rouge Dragon d'Or */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #d9251b; /* Rouge plus foncé au survol */
+}
+
+}
