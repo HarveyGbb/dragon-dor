@@ -3,102 +3,84 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Plat; // Utilise le Modèle Plat (TAP 1)
-use Illuminate\Support\Facades\Session; // Utilise le mécanisme de session de Laravel
+use App\Models\Plat;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    // Fonction pour ajouter un plat au panier (répond à la route POST /cart/add)
-    public function add(Request $request)
-    {
-        // 1. Validation des données
-        $request->validate([
-            'plat_id' => 'required|integer',
-            'quantity' => 'required|integer|min:1',
-        ]);
-
-        $platId = $request->plat_id;
-        $quantity = $request->quantity;
-
-        // 2. Récupérer les infos du plat depuis la base de données
-        $plat = Plat::findOrFail($platId);
-
-        // 3. Récupérer le panier actuel (crée un tableau vide s'il n'existe pas)
-        $cart = Session::get('cart', []);
-
-        // 4. Logique d'ajout / mise à jour de la quantité
-        if (isset($cart[$platId])) {
-            $cart[$platId]['quantity'] += $quantity;
-        } else {
-            // Ajouter le nouveau plat au panier
-            $cart[$platId] = [
-                "plat_id" => $platId,
-                "name" => $plat->nom,
-                "price" => $plat->prix,
-                "quantity" => $quantity
-            ];
-        }
-
-        // 5. Sauvegarder le panier mis à jour dans la session (Panier persistant)
-        Session::put('cart', $cart);
-
-        return redirect()->back()->with('success', $quantity . ' x ' . $plat->nom . ' ajouté au panier !');
-    }
-
-    // Fonction pour afficher la page du panier (répond à la route GET /panier)
+    // AFFICHER LE PANIER
     public function show()
     {
         $cart = Session::get('cart', []);
 
-        // Renvoyer les données du panier à la vue 'panier.blade.php' (à créer)
-        return view('panier', compact('cart'));
+        // On récupère les stocks pour gérer la limite
+        $ids = array_keys($cart);
+        $stocks = Plat::whereIn('id', $ids)->pluck('stock', 'id');
+
+        return view('panier', compact('cart', 'stocks'));
     }
 
-    // Fonction pour mettre à jour la quantité d'un plat ou le supprimer
+    // AJOUTER UN PLAT
+    public function add(Request $request)
+    {
+        $id = $request->id;
+        $qty_demandee = (int) $request->input('quantity', 1);
+
+        $plat = Plat::findOrFail($id);
+        $cart = Session::get('cart', []);
+
+        // Vérification du stock
+        $qty_deja_prise = isset($cart[$id]) ? $cart[$id]['quantity'] : 0;
+        if (($qty_deja_prise + $qty_demandee) > $plat->stock) {
+            return redirect()->back()->with('error', "Stock insuffisant !");
+        }
+
+        // Si le plat est déjà dans le panier, on augmente juste la quantité
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity'] += $qty_demandee;
+        } else {
+            // SINON, ON CRÉE LA LIGNE
+            $cart[$id] = [
+                // J'ai ajouté une sécurité pour le nom (si 'nom' n'existe pas, il prend 'description')
+                "name" => $plat->nom ?? $plat->description,
+                "quantity" => $qty_demandee,
+                "price" => $plat->prix,
+                // 👇 C'EST ICI LA CORRECTION IMPORTANTE 👇
+                "image" => $plat->image_url  // On utilise 'image_url' comme dans ta base de données
+            ];
+        }
+
+        Session::put('cart', $cart);
+        return redirect()->back()->with('success', 'Ajouté au panier !');
+    }
+
+    // MISE À JOUR QUANTITÉ
     public function update(Request $request)
     {
-        $request->validate([
-            'plat_id' => 'required|integer',
-            'quantity' => 'required|integer|min:0',
-        ]);
+        if($request->id && $request->quantity){
+            $plat = Plat::findOrFail($request->id);
 
-        $cart = Session::get('cart', []);
-        $platId = $request->plat_id;
-        $quantity = $request->quantity;
-
-        if (isset($cart[$platId])) {
-            if ($quantity > 0) {
-                $cart[$platId]['quantity'] = $quantity;
-                Session::put('cart', $cart);
-                $message = "Quantité mise à jour.";
+            if ($request->quantity > $plat->stock) {
+                session()->flash('error', "Stock insuffisant");
             } else {
-                // Si la quantité est 0, suppression de l'article
-                unset($cart[$platId]);
+                $cart = Session::get('cart');
+                $cart[$request->id]["quantity"] = $request->quantity;
                 Session::put('cart', $cart);
-                $message = "Plat retiré du panier.";
             }
-        } else {
-            $message = "Erreur: Plat introuvable.";
         }
-
-        return redirect()->route('cart.show')->with('success', $message);
+        return redirect()->route('cart.show');
     }
 
-    // Fonction pour supprimer un plat (via son ID)
-    public function remove($id)
+    // SUPPRIMER
+    public function remove(Request $request)
     {
-        $cart = Session::get('cart', []);
-
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            Session::put('cart', $cart);
-            $message = "Plat supprimé du panier.";
-        } else {
-            $message = "Erreur: Plat introuvable.";
+        if($request->id) {
+            $cart = Session::get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                Session::put('cart', $cart);
+            }
         }
-
-        return redirect()->route('cart.show')->with('success', $message);
+        return redirect()->route('cart.show');
     }
 }
-
-

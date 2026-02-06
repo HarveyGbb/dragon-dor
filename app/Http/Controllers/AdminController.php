@@ -4,29 +4,61 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Commande;
+use App\Models\Plat; // Indispensable pour récupérer la liste des stocks
 
 class AdminController extends Controller
 {
-    // Affiche la liste
+    // 1. AFFICHER LE TABLEAU DE BORD (Commandes + Stocks)
     public function index()
     {
-        $commandes = Commande::orderBy('date_creation', 'desc')->get();
-        return view('admin.commandes.index', compact('commandes'));
+        // Récupère les commandes (les plus récentes en premier) avec les détails des plats
+        $commandes = Commande::with('plats')->orderBy('created_at', 'desc')->get();
+
+        // Récupère TOUS les plats pour l'onglet "Gestion des Stocks"
+        // C'est cette variable $tousLesPlats qui remplit le 2ème onglet
+        $tousLesPlats = Plat::all();
+
+        // On envoie les deux variables à la vue
+        return view('admin.commandes.index', compact('commandes', 'tousLesPlats'));
     }
 
-    // Affiche le détail
-    public function show(Commande $commande)
+    // 2. METTRE À JOUR LE STATUT D'UNE COMMANDE (Cuisine)
+    public function updateStatus(Request $request, $id)
     {
-        return view('admin.commandes.show', compact('commande'));
+        $commande = Commande::findOrFail($id);
+
+        // Validation pour sécuriser les statuts autorisés
+        $request->validate([
+            'statut' => 'required|in:en_attente,en_preparation,prete,recuperee'
+        ]);
+
+        $commande->update([
+            'statut' => $request->statut
+        ]);
+
+        return redirect()->back()->with('success', 'Statut de la commande mis à jour !');
     }
 
-    // Met à jour le statut
-    public function updateStatus(Request $request, Commande $commande)
+    // 3. GÉRER LES STOCKS (Boutons + et -)
+    public function updateStock(Request $request, $id)
     {
-        $request->validate(['statut' => 'required|string']);
-        $commande->statut = $request->statut;
-        $commande->save();
+        $plat = Plat::findOrFail($id);
 
-        return redirect()->route('admin.commandes.index')->with('success', 'Statut mis à jour !');
+        if ($request->action == 'augmenter') {
+            $plat->increment('stock');
+        }
+        elseif ($request->action == 'diminuer') {
+            if ($plat->stock > 0) {
+                $plat->decrement('stock');
+            } else {
+                // On reste sur l'onglet stocks même en cas d'erreur
+                return redirect()->back()->with('error', 'Stock déjà à 0')->with('tab', 'stocks');
+            }
+        }
+
+        //  on ajoute ->with('tab', 'stocks')
+        return redirect()->back()
+            ->with('success', 'Stock mis à jour pour ' . $plat->nom)
+            ->with('tab', 'stocks');
     }
 }

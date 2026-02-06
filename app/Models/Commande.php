@@ -2,26 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Commande extends Model
 {
-    // Nom de la table (confirmé : 'commande' au singulier)
+    use HasFactory;
+
     protected $table = 'commande';
 
-    // Mappage des dates personnalisées (date_creation)
-    const CREATED_AT = 'date_creation';
-    const UPDATED_AT = null;
 
-    // Les champs que vous avez ajoutés et qui sont obligatoires pour l'enregistrement (y compris l'invité)
     protected $fillable = [
-        'client_id',      // NULL pour les invités (Click & Collect)
-        'nom_client',     // Champ invité ajouté
-        'telephone',      // Champ invité ajouté
-        'heure_retrait',  // Champ invité ajouté
+        'nom',
+        'prenom',
+        'telephone',
+        'heure_retrait',
         'total',
         'statut',
-        'date_creation'
     ];
-}
 
+    public function plats()
+    {
+        return $this->belongsToMany(Plat::class, 'commande_plat', 'commande_id', 'plat_id')
+                    ->withPivot('quantite', 'prix_unitaire');
+    }
+}

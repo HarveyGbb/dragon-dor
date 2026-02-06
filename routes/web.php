@@ -1,77 +1,66 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
-use App\Models\Plat;
+use App\Http\Controllers\PlatController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| 1. ZONE PUBLIQUE (Clients)
 |--------------------------------------------------------------------------
 */
 
-// --- 1. ROUTES PUBLIQUES (CLIENT) ---
-
-// Route 1. ACCUEIL (Page d'introduction)
+// ACCUEIL
 Route::get('/', function () {
     return view('accueil');
 })->name('accueil.index');
 
+// MENU
+Route::get('/menu', [PlatController::class, 'index'])->name('menu.index');
 
-// Route 2. MENU (Page principale des plats)
-Route::get('/menu', function () {
-    // Compteur panier
-    $cart = Session::get('cart', []);
-    $itemCount = array_sum(array_column($cart, 'quantity'));
+// CONTACT
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-    // Récupération et tri des plats
-    $plats = Plat::orderBy('categorie')->orderBy('nom')->get();
-
-    // Groupement par catégorie (Entrées, Plats, etc.)
-    $platsParCategorie = $plats->groupBy('categorie');
-
-    // On envoie les variables à la vue 'welcome'
-    return view('welcome', compact('itemCount', 'platsParCategorie'));
-})->name('menu.index');
-
-
-// --- ROUTES DU PANIER ---
-
-// Ajouter
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-// Voir
+// PANIER
 Route::get('/panier', [CartController::class, 'show'])->name('cart.show');
-// Mettre à jour quantité
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-// Supprimer un article
-Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/panier/add', [CartController::class, 'add'])->name('cart.add');
+Route::patch('/panier/update', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/panier/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+// COMMANDE
+Route::get('/commande', [CommandeController::class, 'create'])->name('order.create');
+Route::post('/commande', [CommandeController::class, 'store'])->name('order.store');
+Route::get('/commande/confirmation/{id}', [CommandeController::class, 'confirmation'])->name('order.confirmation');
 
 
-// --- ROUTES DE COMMANDE ---
+/*
+|--------------------------------------------------------------------------
+| 2. ZONE PRIVÉE (Admin / Cuisinier)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 
-// Formulaire de validation
-Route::get('/commander', [CommandeController::class, 'create'])->name('order.create');
-// Enregistrement final
-Route::post('/commander', [CommandeController::class, 'store'])->name('order.store');
+    // Cuisine
+    Route::get('/admin/commandes', [AdminController::class, 'index'])->name('admin.index');
 
+    // Actions Admin (CORRECTION ICI : Ajout des tirets bas '_' pour correspondre à tes vues)
+    Route::post('/admin/commandes/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.commandes.update_status');
+    Route::post('/admin/plats/{id}/stock', [AdminController::class, 'updateStock'])->name('admin.plats.update_stock');
 
-// --- 2. ROUTES D'ADMINISTRATION (BACK-OFFICE) ---
+    // Redirection Dashboard -> Cuisine
+    Route::get('/dashboard', function () {
+        return redirect()->route('admin.index');
+    })->name('dashboard');
 
-// Groupe préfixé par '/admin'
-Route::prefix('admin')->group(function () {
-
-    // 1. Tableau de bord (Liste des commandes)
-    Route::get('commandes', [AdminController::class, 'index'])
-         ->name('admin.commandes.index');
-
-    // 2. Détail d'une commande (Optionnel mais recommandé)
-    Route::get('commandes/{commande}', [AdminController::class, 'show'])
-         ->name('admin.commandes.show');
-
-    // 3. Action : Mise à jour du statut (En cuisine -> Prêt)
-    Route::post('commandes/{commande}/update-status', [AdminController::class, 'updateStatus'])
-         ->name('admin.commandes.update_status');
+    // Profil (Breeze)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__.'/auth.php';

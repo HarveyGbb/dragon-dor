@@ -6,12 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plat extends Model
 {
-    // C'est crucial : lie le modèle à votre table 'plat' singulière
     protected $table = 'plat';
 
-    // Indique à Laravel que la table n'a pas de colonnes created_at/updated_at
-    public $timestamps = false;
+    protected $fillable = [
+        'nom',
+        'description',
+        'prix',
+        'image_url',
+        'disponible',
+        'categorie_id'
+    ];
 
-    // Les champs que vous utilisez (à vérifier avec votre BDD)
-    protected $fillable = ['nom', 'description', 'prix', 'categorie', 'id'];
+    protected $casts = [
+        'prix' => 'decimal:2',
+        'disponible' => 'boolean'
+    ];
+
+
+    public function laCategorie()
+    {
+        return $this->belongsTo(Categorie::class, 'categorie_id');
+    }
+
+    public function commandes()
+    {
+        return $this->belongsToMany(Commande::class, 'commande_plat', 'plat_id', 'commande_id')
+                    ->withPivot('quantite', 'prix_unitaire');
+    }
+
+    public function estDisponible()
+    {
+        return $this->disponible === true;
+    }
+
+    public function getPrixFormateAttribute()
+    {
+        return number_format($this->prix, 2, ',', ' ') . ' €';
+    }
 }
