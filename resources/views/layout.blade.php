@@ -10,7 +10,7 @@
     @yield('css')
 
     <style>
-        /* --- NOUVEAU : BACKGROUND QUI PREND TOUT L'ÉCRAN --- */
+
         html, body {
             height: 100%; /* Force la hauteur totale */
             margin: 0;

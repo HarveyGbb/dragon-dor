@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Commande;
-use App\Models\Plat; // Indispensable pour gérer les stocks
+use App\Models\Plat;
 use Illuminate\Support\Facades\Session;
 
 class CommandeController extends Controller
@@ -43,7 +43,7 @@ class CommandeController extends Controller
             return redirect()->route('menu.index');
         }
 
-        // --- 🔴 SÉCURITÉ STOCK : VÉRIFICATION AVANT CRÉATION ---
+        // --- SÉCURITÉ STOCK  ---
         foreach ($cart as $id_plat => $details) {
             $plat = Plat::find($id_plat);
 
@@ -78,7 +78,7 @@ class CommandeController extends Controller
                 'prix_unitaire' => $details['price']
             ]);
 
-            // DÉDUCTION DU STOCK (On est sûr que c'est possible grâce à la vérif plus haut)
+            // DÉDUCTION DU STOCK
             $plat = Plat::find($id_plat);
             if ($plat) {
                 $plat->decrement('stock', $details['quantity']);

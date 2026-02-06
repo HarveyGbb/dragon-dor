@@ -2,10 +2,10 @@
 
 @section('css')
 <style>
-    /* 1. ANIMATION DU DRAGON QUI BRILLE */
+
     .dragon-shine {
         display: inline-block;
-        font-size: 4rem; /* Très gros dragon */
+        font-size: 4rem;
         animation: dragonPulse 2s infinite alternate ease-in-out;
         cursor: default;
     }

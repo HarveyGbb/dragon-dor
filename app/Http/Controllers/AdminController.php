@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Commande;
-use App\Models\Plat; // Indispensable pour récupérer la liste des stocks
+use App\Models\Plat;
 
 class AdminController extends Controller
 {
@@ -15,7 +15,7 @@ class AdminController extends Controller
         $commandes = Commande::with('plats')->orderBy('created_at', 'desc')->get();
 
         // Récupère TOUS les plats pour l'onglet "Gestion des Stocks"
-        // C'est cette variable $tousLesPlats qui remplit le 2ème onglet
+
         $tousLesPlats = Plat::all();
 
         // On envoie les deux variables à la vue

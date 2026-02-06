@@ -2,7 +2,7 @@
 
 @section('css')
 <style>
-    /* --- 1. CSS POUR CACHER LES FLÈCHES DU NAVIGATEUR (Chrome/Safari/Edge) --- */
+
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -12,7 +12,6 @@
         -moz-appearance: textfield; /* Firefox */
     }
 
-    /* --- 2. TON DESIGN GOLD EXISTANT --- */
     .filter-link {
         border: 1px solid var(--gold) !important;
         background: transparent; color: var(--black-soft); font-weight: 500;

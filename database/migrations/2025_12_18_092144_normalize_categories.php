@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // 1. Pour CATEGORIES : On vérifie si la colonne 'created_at' manque avant d'ajouter
+
         if (Schema::hasTable('categories') && !Schema::hasColumn('categories', 'created_at')) {
             Schema::table('categories', function (Blueprint $table) {
                 $table->timestamps();

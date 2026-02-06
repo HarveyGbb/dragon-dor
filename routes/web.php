@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     // Cuisine
     Route::get('/admin/commandes', [AdminController::class, 'index'])->name('admin.index');
 
-    // Actions Admin (CORRECTION ICI : Ajout des tirets bas '_' pour correspondre à tes vues)
+    // Actions Admin
     Route::post('/admin/commandes/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.commandes.update_status');
     Route::post('/admin/plats/{id}/stock', [AdminController::class, 'updateStock'])->name('admin.plats.update_stock');
 

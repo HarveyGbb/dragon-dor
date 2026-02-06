@@ -41,12 +41,12 @@ class CartController extends Controller
         } else {
             // SINON, ON CRÉE LA LIGNE
             $cart[$id] = [
-                // J'ai ajouté une sécurité pour le nom (si 'nom' n'existe pas, il prend 'description')
+                //sécurité pour le nom
                 "name" => $plat->nom ?? $plat->description,
                 "quantity" => $qty_demandee,
                 "price" => $plat->prix,
-                // 👇 C'EST ICI LA CORRECTION IMPORTANTE 👇
-                "image" => $plat->image_url  // On utilise 'image_url' comme dans ta base de données
+
+                "image" => $plat->image_url  // On utilise 'image_url'
             ];
         }
 
