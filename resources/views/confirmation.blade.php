@@ -30,7 +30,7 @@
     }
 
     /* 2. EN CUISINE (C'est ici qu'on applique la classe en_preparation) */
-    .status-en_preparation {
+    .status-en_cuisine {
         background-color: #f0fdf4;
         color: #166534;
         border: 2px solid #22c55e !important;
@@ -74,18 +74,16 @@
 
                 <hr class="my-4" style="border-color: var(--gold); opacity: 0.3;">
 
-                <div class="status-box status-{{ $commande->statut }}">
-                    @if($commande->statut == 'en_attente')
-                        ⏳ Reçue : En attente du cuisinier
-                    @elseif($commande->statut == 'en_preparation')
-                        👨‍🍳 En cuisine : Le chef prépare vos plats
-                    @elseif($commande->statut == 'prete')
-                        🥡 Prête : Vous pouvez venir la récupérer !
-                    @elseif($commande->statut == 'recuperee')
-                        🏁 Terminée : Votre plat a bien été récupéré.
-                    @endif
-                </div>
-
+<div class="status-box status-{{ $commande->statut }}">
+    @if($commande->statut == 'en_attente')
+        ⏳ Reçue : En attente du cuisinier
+    @elseif($commande->statut == 'en_cuisine') 👨‍🍳 En cuisine : Le chef prépare vos plats
+    @elseif($commande->statut == 'prete')
+        🥡 Prête : Vous pouvez venir la récupérer !
+    @elseif($commande->statut == 'recuperee')
+        🏁 Terminée : Votre plat a bien été récupéré.
+    @endif
+</div>
                 <div class="mt-4 pt-2">
                     @if($commande->statut != 'recuperee')
                         <p class="small text-muted mb-3">

@@ -22,14 +22,14 @@ class AdminController extends Controller
         return view('admin.commandes.index', compact('commandes', 'tousLesPlats'));
     }
 
-    // 2. METTRE À JOUR LE STATUT D'UNE COMMANDE (Cuisine)
+// 2. METTRE À JOUR LE STATUT D'UNE COMMANDE
     public function updateStatus(Request $request, $id)
     {
         $commande = Commande::findOrFail($id);
 
-        // Validation pour sécuriser les statuts autorisés
+        // Correction de la validation : on utilise les mêmes noms que dans la vue et Java
         $request->validate([
-            'statut' => 'required|in:en_attente,en_preparation,prete,recuperee'
+            'statut' => 'required|in:en_attente,en_cuisine,prete,fini'
         ]);
 
         $commande->update([

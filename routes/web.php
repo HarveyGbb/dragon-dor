@@ -52,10 +52,26 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/commandes/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.commandes.update_status');
     Route::post('/admin/plats/{id}/stock', [AdminController::class, 'updateStock'])->name('admin.plats.update_stock');
 
+    // === ARCHIVER / DÉSARCHIVER UN PLAT ===
+    Route::post('/admin/plats/{plat}/toggle', [PlatController::class, 'toggleVisibility'])->name('admin.plats.toggle_visibility');
+
+    // === GESTION DES PLATS (CRUD) ===
+    // Formulaire d'ajout
+    Route::get('/plats/create', [PlatController::class, 'create'])->name('admin.plats.create');
+    // Enregistrement du nouveau plat
+    Route::post('/plats', [PlatController::class, 'store'])->name('admin.plats.store');
+
+    // NOUVEAU : Formulaire de modification
+    Route::get('/admin/plats/{plat}/edit', [PlatController::class, 'edit'])->name('admin.plats.edit');
+    // NOUVEAU : Enregistrement de la modification
+    Route::put('/admin/plats/{plat}', [PlatController::class, 'update'])->name('admin.plats.update');
+
+
     // Redirection Dashboard -> Cuisine
     Route::get('/dashboard', function () {
         return redirect()->route('admin.index');
     })->name('dashboard');
+
 
     // Profil (Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

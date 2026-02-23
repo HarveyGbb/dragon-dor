@@ -12,16 +12,17 @@ class Plat extends Model
         'nom',
         'description',
         'prix',
-        'image_url',
+        'image_url', // Vérifie que c'est bien le nom en base de données
         'disponible',
-        'categorie_id'
+        'categorie_id',
+        'stock'
     ];
 
     protected $casts = [
         'prix' => 'decimal:2',
-        'disponible' => 'boolean'
+        'disponible' => 'boolean',
+        'stock' => 'integer'
     ];
-
 
     public function laCategorie()
     {
@@ -32,11 +33,6 @@ class Plat extends Model
     {
         return $this->belongsToMany(Commande::class, 'commande_plat', 'plat_id', 'commande_id')
                     ->withPivot('quantite', 'prix_unitaire');
-    }
-
-    public function estDisponible()
-    {
-        return $this->disponible === true;
     }
 
     public function getPrixFormateAttribute()

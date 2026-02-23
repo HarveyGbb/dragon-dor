@@ -9,7 +9,7 @@ export default defineConfig({
         }),
     ],
 
-    // AJOUTEZ CETTE SECTION
+
     server: {
         host: 'localhost',
         port: 5175, // le port que Vite utilise actuellement

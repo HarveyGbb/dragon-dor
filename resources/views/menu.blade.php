@@ -117,15 +117,19 @@
                             <div class="col">
                                 <div class="card menu-card h-100 shadow-sm">
 
-                                    <div class="menu-card-img-wrapper">
-                                        @if($plat->image)
-                                            <img src="{{ asset('storage/' . $plat->image) }}" class="menu-card-img" alt="{{ $plat->nom }}">
-                                        @elseif($plat->image_url)
-                                            <img src="{{ asset('images/' . $plat->image_url) }}" class="menu-card-img" alt="{{ $plat->nom }}">
-                                        @else
-                                            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#eee; font-size:3rem;">🍜</div>
-                                        @endif
-                                    </div>
+<div class="menu-card-img-wrapper">
+    @if($plat->image_url)
+        {{-- Si l'image commence par 'plats/' c'est un nouvel upload (dossier storage) --}}
+        @if(str_starts_with($plat->image_url, 'plats/'))
+            <img src="{{ asset('storage/' . $plat->image_url) }}" class="menu-card-img" alt="{{ $plat->nom }}">
+        {{-- Sinon, c'est une de tes anciennes images (dossier public/images) --}}
+        @else
+            <img src="{{ asset('images/' . $plat->image_url) }}" class="menu-card-img" alt="{{ $plat->nom }}">
+        @endif
+    @else
+        <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#eee; font-size:3rem;">🍜</div>
+    @endif
+</div>
 
                                     <div class="card-body d-flex flex-column p-4">
 

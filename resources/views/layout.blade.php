@@ -94,7 +94,7 @@
                     </li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
                         <a class="btn btn-light text-dark fw-bold btn-sm rounded-pill px-3" href="/admin/commandes">
-                            👨‍🍳 Cuisinier
+                            admin
                         </a>
                     </li>
                 </ul>

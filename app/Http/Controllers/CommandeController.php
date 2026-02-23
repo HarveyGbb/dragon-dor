@@ -98,13 +98,14 @@ class CommandeController extends Controller
         return view('confirmation', compact('commande'));
     }
 
-    // Modifier le statut depuis l'Admin
+    // Modifier le statut depuis l'Admin (Interface Web)
     public function update_status(Request $request, $id)
     {
         $commande = Commande::findOrFail($id);
 
+        // On unifie les statuts avec ceux de JavaFX
         $request->validate([
-            'statut' => 'required|in:en_attente,en_preparation,prete,recuperee'
+            'statut' => 'required|in:en_attente,en_cuisine,prete,fini'
         ]);
 
         $commande->update([
@@ -112,5 +113,45 @@ class CommandeController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Statut mis à jour !');
+    }
+
+   // =========================================================
+    // API POUR L'APPLICATION DESKTOP (JAVAFX)
+    // =========================================================
+
+    // 1. Envoyer les commandes en attente ET en cuisine au format JSON
+    public function apiGetCommandesEnCours()
+    {
+        // On utilise whereIn pour que la commande reste affichée en cuisine !
+        $commandes = Commande::with('plats')
+            ->whereIn('statut', ['en_attente', 'en_cuisine'])
+            ->get();
+
+        return response()->json($commandes, 200);
+    }
+
+    // 2. Modifier le statut depuis l'application JavaFX
+    public function updateStatut(Request $request, $id)
+    {
+        // On cherche la commande dans la base de données
+        $commande = Commande::find($id);
+
+        if (!$commande) {
+            return response()->json(['message' => 'Commande introuvable'], 404);
+        }
+
+        // On valide que le statut envoyé est correct
+        $request->validate([
+            'statut' => 'required|string|in:en_attente,en_cuisine,prete,fini'
+        ]);
+
+        // On met à jour le statut
+        $commande->statut = $request->statut;
+        $commande->save();
+
+        return response()->json([
+            'message' => 'Statut mis à jour avec succès',
+            'commande' => $commande
+        ], 200);
     }
 }
