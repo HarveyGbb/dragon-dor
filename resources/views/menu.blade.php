@@ -122,7 +122,7 @@
         {{-- Si l'image commence par 'plats/' c'est un nouvel upload (dossier storage) --}}
         @if(str_starts_with($plat->image_url, 'plats/'))
             <img src="{{ asset('storage/' . $plat->image_url) }}" class="menu-card-img" alt="{{ $plat->nom }}">
-        {{-- Sinon, c'est une de tes anciennes images (dossier public/images) --}}
+        {{-- Sinon, c'est une anciennes images (dossier public/images) --}}
         @else
             <img src="{{ asset('images/' . $plat->image_url) }}" class="menu-card-img" alt="{{ $plat->nom }}">
         @endif

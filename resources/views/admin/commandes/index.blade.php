@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/css/admin.css'])
 
     <style>
-        /* ... Tes styles existants ... */
+
         .admin-tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 0; }
         .tab-btn { background: none; border: none; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; color: #6b7280; cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s ease; }
         .tab-btn:hover { color: #ca8a04; background-color: #fefce8; }
@@ -197,7 +197,7 @@
             activeBtn.classList.add('active');
         }
 
-        // Garder l'onglet actif après un rechargement de page (ex: après un ajout de stock)
+        // Garde l'onglet actif après un rechargement de page (ex: après un ajout de stock)
         @if(session('tab') == 'stocks')
             switchTab('stocks');
         @endif

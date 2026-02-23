@@ -109,7 +109,7 @@
 <script>
     // Rafraîchit la page toutes les 15 secondes
     setInterval(function(){
-        // On arrête de rafraîchir si la commande est récupérée (fin de cycle)
+        // arrête de rafraîchir si la commande est récupérée (fin de cycle)
         @if($commande->statut != 'recuperee')
             window.location.reload();
         @endif

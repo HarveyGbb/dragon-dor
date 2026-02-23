@@ -103,7 +103,7 @@ class PlatController extends Controller
             'stock' => 'required|integer|min:0'
         ]);
 
-        // On récupère toutes les données sauf l'image
+        //  récupère toutes les données sauf l'image
         $data = $request->except(['image']);
 
         // Si l'admin a mis une NOUVELLE image, on la sauvegarde
@@ -111,7 +111,7 @@ class PlatController extends Controller
             $data['image_url'] = $request->file('image')->store('plats', 'public');
         }
 
-        // On met à jour le plat
+        //  met à jour le plat
         $plat->update($data);
 
         return redirect()->route('admin.index')->with('success', 'Le plat a été modifié avec succès ! 🍲');

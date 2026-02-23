@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request; // 🌟 AJOUTER CETTE LIGNE
-use Illuminate\Support\Facades\Hash; // 🌟 AJOUTER CETTE LIGNE
-use App\Models\User; // 🌟 AJOUTER CETTE LIGNE
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Http\Controllers\CommandeController;
-use App\Models\Commande; // Pour que Laravel trouve ta table commandes
-use Carbon\Carbon;       // Pour que Laravel comprenne la gestion des dates
+use App\Models\Commande;
+use Carbon\Carbon;
 
 // L'URL pour JavaFX
 Route::get('/commandes/en-cours', [CommandeController::class, 'apiGetCommandesEnCours']);
@@ -14,9 +14,9 @@ Route::get('/commandes/en-cours', [CommandeController::class, 'apiGetCommandesEn
 // Route pour modifier le statut d'une commande depuis JavaFX
 Route::put('/commandes/{id}/statut', [CommandeController::class, 'updateStatut']);
 
-// Route de connexion mise à jour pour le nom "Cuisine"
+// Route de connexion
 Route::post('/login', function (Request $request) {
-    // 🌟 ON CHERCHE PAR 'name' AU LIEU DE 'email'
+//nom de l'username et mot de passe
     $user = User::where('name', $request->identifiant)->first();
 
     // Vérification du mot de passe

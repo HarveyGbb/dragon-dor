@@ -18,7 +18,7 @@ class AdminController extends Controller
 
         $tousLesPlats = Plat::all();
 
-        // On envoie les deux variables à la vue
+        //  envoie les deux variables à la vue
         return view('admin.commandes.index', compact('commandes', 'tousLesPlats'));
     }
 
@@ -27,7 +27,7 @@ class AdminController extends Controller
     {
         $commande = Commande::findOrFail($id);
 
-        // Correction de la validation : on utilise les mêmes noms que dans la vue et Java
+        //  utilise les mêmes noms que dans la vue et Java
         $request->validate([
             'statut' => 'required|in:en_attente,en_cuisine,prete,fini'
         ]);
@@ -51,12 +51,12 @@ class AdminController extends Controller
             if ($plat->stock > 0) {
                 $plat->decrement('stock');
             } else {
-                // On reste sur l'onglet stocks même en cas d'erreur
+                //  reste sur l'onglet stocks même en cas d'erreur
                 return redirect()->back()->with('error', 'Stock déjà à 0')->with('tab', 'stocks');
             }
         }
 
-        //  on ajoute ->with('tab', 'stocks')
+        //   ajoute ->with('tab', 'stocks')
         return redirect()->back()
             ->with('success', 'Stock mis à jour pour ' . $plat->nom)
             ->with('tab', 'stocks');

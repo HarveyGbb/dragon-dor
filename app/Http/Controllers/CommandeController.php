@@ -122,7 +122,7 @@ class CommandeController extends Controller
     // 1. Envoyer les commandes en attente ET en cuisine au format JSON
     public function apiGetCommandesEnCours()
     {
-        // On utilise whereIn pour que la commande reste affichée en cuisine !
+        //  utilise whereIn pour que la commande reste affichée en cuisine !
         $commandes = Commande::with('plats')
             ->whereIn('statut', ['en_attente', 'en_cuisine'])
             ->get();
@@ -133,7 +133,7 @@ class CommandeController extends Controller
     // 2. Modifier le statut depuis l'application JavaFX
     public function updateStatut(Request $request, $id)
     {
-        // On cherche la commande dans la base de données
+        //  cherche la commande dans la base de données
         $commande = Commande::find($id);
 
         if (!$commande) {
@@ -145,7 +145,7 @@ class CommandeController extends Controller
             'statut' => 'required|string|in:en_attente,en_cuisine,prete,fini'
         ]);
 
-        // On met à jour le statut
+        // met à jour le statut
         $commande->statut = $request->statut;
         $commande->save();
 

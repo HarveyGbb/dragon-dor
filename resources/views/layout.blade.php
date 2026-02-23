@@ -19,7 +19,7 @@
             background-color: #FDFCF5;
         }
 
-        /* --- TES STYLES EXISTANTS --- */
+
         .dragon-gold {
             background: linear-gradient(
                 90deg,
