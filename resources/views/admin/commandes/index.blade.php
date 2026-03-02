@@ -86,7 +86,7 @@
                             <td>
                                 @php
                                     // Modifié : 'en_cuisine' et 'fini' intégrés au tableau des badges
-                                    $badges = ['en_attente' => ['bg-warning', '⏳ Attente'], 'en_cuisine' => ['bg-info', '🔥 Cuisine'], 'prete' => ['bg-success', '✅ Prête'], 'fini' => ['bg-secondary', '🏁 Finie']];
+                                    $badges = ['en_attente' => ['bg-warning', '⏳ Attente'], 'en_cuisine' => ['bg-info', '🔥 Cuisine'], 'prete' => ['bg-success', '✅ Prête'], 'fini' => ['bg-secondary', '🏁 Fini']];
                                     $info = $badges[$commande->statut] ?? ['bg-light', 'Inconnu'];
                                 @endphp
                                 <span class="badge {{ $info[0] }} text-dark">{{ $info[1] }}</span>
@@ -98,7 +98,7 @@
                                         <option value="en_attente" {{ $commande->statut == 'en_attente' ? 'selected' : '' }}>Attente</option>
                                         <option value="en_cuisine" {{ $commande->statut == 'en_cuisine' ? 'selected' : '' }}>Cuisine</option>
                                         <option value="prete" {{ $commande->statut == 'prete' ? 'selected' : '' }}>Prête</option>
-                                        <option value="fini" {{ $commande->statut == 'fini' ? 'selected' : '' }}>Finie</option>
+                                        <option value="fini" {{ $commande->statut == 'fini' ? 'selected' : '' }}>Fini</option>
                                     </select>
                                     <button type="submit" class="btn btn-sm btn-dark">OK</button>
                                 </form>

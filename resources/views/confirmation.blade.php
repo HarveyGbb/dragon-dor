@@ -80,12 +80,12 @@
     @elseif($commande->statut == 'en_cuisine') 👨‍🍳 En cuisine : Le chef prépare vos plats
     @elseif($commande->statut == 'prete')
         🥡 Prête : Vous pouvez venir la récupérer !
-    @elseif($commande->statut == 'recuperee')
+    @elseif($commande->statut == 'fini')
         🏁 Terminée : Votre plat a bien été récupéré.
     @endif
 </div>
                 <div class="mt-4 pt-2">
-                    @if($commande->statut != 'recuperee')
+                    @if($commande->statut != 'fini')
                         <p class="small text-muted mb-3">
                             <i>La page se met à jour automatiquement pour vous avertir.</i>
                         </p>
@@ -110,7 +110,7 @@
     // Rafraîchit la page toutes les 15 secondes
     setInterval(function(){
         // arrête de rafraîchir si la commande est récupérée (fin de cycle)
-        @if($commande->statut != 'recuperee')
+        @if($commande->statut != 'fini')
             window.location.reload();
         @endif
     }, 15000);
