@@ -39,12 +39,16 @@
             <h1 class="admin-title m-0">Tableau de Bord</h1>
             <p class="text-muted ms-3 mt-1 mb-0">Espace Gérant </p>
         </div>
-
+<br>
         <div class="d-flex gap-3 align-items-center">
+<br>
+<br>
             <form method="POST" action="{{ route('logout') }}" class="m-0">
+
                 @csrf
-                <button type="submit" class="btn btn-danger btn-sm fw-bold">🚪 Déconnexion</button>
+                <button type="submit" class="btn btn-danger btn-sm fw-bold">🚪      Déconnexion</button>
             </form>
+
 
             <button onclick="window.location.reload();" class="btn btn-outline-secondary btn-sm">🔄 Actualiser</button>
             <a href="{{ route('accueil.index') }}" class="btn btn-outline-primary btn-sm">Retour au site</a>

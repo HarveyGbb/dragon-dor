@@ -39,11 +39,10 @@ Route::get('/commandes/export-jour', function () {
                     ->get();
 });
 
-// =========================================================
-// NOUVELLE ROUTE : STATISTIQUES DES PLATS POUR LE BARCHART
-// =========================================================
+// ROUTE : STATISTIQUES DES PLATS POUR LE BARCHART
+
 Route::get('/commandes/stats-plats', function () {
-    // Utilisation stricte des noms de ta base de données (commande, plat, commande_plat)
+    // Utilisation de la base de données (commande, plat, commande_plat)
     $stats = DB::table('commande_plat')
         ->join('plat', 'commande_plat.plat_id', '=', 'plat.id')
         ->join('commande', 'commande_plat.commande_id', '=', 'commande.id')
