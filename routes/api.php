@@ -55,3 +55,4 @@ Route::get('/commandes/stats-plats', function () {
 
     return response()->json($stats);
 });
+
